@@ -1,0 +1,9 @@
+django==5.1.*
+dj-database-url
+python-dotenv
+psycopg[binary]
+pgvector
+django-htmx
+
+celery==5.4.*
+redis==5.*

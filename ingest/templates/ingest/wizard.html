@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+  <body hx-boost="true">
+    <h1>Ingest Wizard (MVP)</h1>
+    <form method="post" action="/wizard/submit/">
+      {% csrf_token %}
+      <label>Typ objektu:</label>
+      <select name="ko_type">
+        <option value="podnet">Podnet</option>
+        <option value="vyrocna">Výročná správa</option>
+        <option value="list">List</option>
+        <option value="tema">Tématický súhrn</option>
+      </select>
+      <input type="text" name="title" placeholder="Názov (voliteľné)" />
+      <button type="submit">Spustiť ingest</button>
+    </form>
+  </body>
+</html>
