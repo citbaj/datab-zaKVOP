@@ -1,5 +1,7 @@
 # PDRFlow
 
+[![CI](https://github.com/citbaj/datab-zaKVOP/actions/workflows/ci.yml/badge.svg)](https://github.com/citbaj/datab-zaKVOP/actions/workflows/ci.yml)
+
 Systém na ingestovanie a vektorové ukladanie dokumentov. Dokumenty sa rozdeľujú na chunky, každý chunk dostane embedding (384-dimenzionálny vektor) a uloží sa do PostgreSQL s rozšírením pgvector pre neskoršie sémantické vyhľadávanie.
 
 ## Architektúra
