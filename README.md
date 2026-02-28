@@ -8,6 +8,22 @@
 
 Systém na ingestovanie a vektorové ukladanie dokumentov. Dokumenty sa rozdeľujú na chunky, každý chunk dostane embedding (384-dimenzionálny vektor) a uloží sa do PostgreSQL s rozšírením pgvector pre neskoršie sémantické vyhľadávanie.
 
+## Stav projektu
+
+| Funkcia | Stav |
+|---|---|
+| Ingest wizard (UI) | ✅ hotovo |
+| Upload súboru / priamy text | ✅ hotovo |
+| Ukladanie RawFile do DB | ✅ hotovo |
+| Chunkovanie textu (LangChain) | ✅ hotovo |
+| Generovanie embeddingov (MiniLM-L6-v2) | ✅ hotovo |
+| Ukladanie chunkov do pgvector | ✅ hotovo |
+| CI (GitHub Actions) | ✅ hotovo |
+| Sémantické vyhľadávanie | 🔲 plánované |
+| Query API / výsledkové UI | 🔲 plánované |
+| Podpora PDF / DOCX | 🔲 plánované |
+| Autentifikácia | 🔲 plánované |
+
 ## Architektúra
 
 ```
