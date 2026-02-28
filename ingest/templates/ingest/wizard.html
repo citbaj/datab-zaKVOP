@@ -1,17 +1,30 @@
 <!doctype html>
 <html>
   <body hx-boost="true">
-    <h1>Ingest Wizard (MVP)</h1>
-    <form method="post" action="/wizard/submit/">
+    <h1>Ingest Wizard</h1>
+    <form method="post" action="/wizard/submit/" enctype="multipart/form-data">
       {% csrf_token %}
-      <label>Typ objektu:</label>
-      <select name="ko_type">
-        <option value="podnet">Podnet</option>
-        <option value="vyrocna">Výročná správa</option>
-        <option value="list">List</option>
-        <option value="tema">Tématický súhrn</option>
-      </select>
-      <input type="text" name="title" placeholder="Názov (voliteľné)" />
+      <div>
+        <label>Typ objektu:</label>
+        <select name="ko_type">
+          <option value="podnet">Podnet</option>
+          <option value="vyrocna">Výročná správa</option>
+          <option value="list">List</option>
+          <option value="tema">Tématický súhrn</option>
+        </select>
+      </div>
+      <div>
+        <label>Názov (voliteľné):</label>
+        <input type="text" name="title" placeholder="Názov dokumentu" />
+      </div>
+      <div>
+        <label>Súbor (.txt):</label>
+        <input type="file" name="file" accept=".txt,text/plain" />
+      </div>
+      <div>
+        <label>Alebo vložte text priamo:</label>
+        <textarea name="text" rows="8" cols="60" placeholder="Text dokumentu…"></textarea>
+      </div>
       <button type="submit">Spustiť ingest</button>
     </form>
   </body>
