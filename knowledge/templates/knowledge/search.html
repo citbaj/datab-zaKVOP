@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+  <body hx-boost="true">
+    <h1>Sémantické vyhľadávanie</h1>
+
+    <form method="get" action="/search/">
+      <input type="text" name="q" value="{{ query }}" placeholder="Zadajte dotaz…" size="60" autofocus />
+      <button type="submit">Hľadať</button>
+    </form>
+
+    {% if query %}
+      <h2>Výsledky pre „{{ query }}"</h2>
+      {% if results %}
+        <ol>
+          {% for chunk in results %}
+            <li>
+              <strong>{{ chunk.ko.get_ko_type_display }}{% if chunk.ko.title %} – {{ chunk.ko.title }}{% endif %}</strong>
+              <small>(skóre: {{ chunk.distance|floatformat:4 }})</small>
+              <p>{{ chunk.text }}</p>
+            </li>
+          {% endfor %}
+        </ol>
+      {% else %}
+        <p>Žiadne výsledky.</p>
+      {% endif %}
+    {% endif %}
+
+    <hr>
+    <a href="/wizard/">← Ingest wizard</a>
+  </body>
+</html>

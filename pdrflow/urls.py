@@ -22,4 +22,5 @@ from django.views.generic import RedirectView
 urlpatterns = [
     path("", RedirectView.as_view(url="/wizard/", permanent=False)),
     path("", include("ingest.urls")),
+    path("", include("knowledge.urls")),
 ]

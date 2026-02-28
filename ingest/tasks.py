@@ -1,15 +1,8 @@
 from celery import shared_task
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from sentence_transformers import SentenceTransformer
+from knowledge.embeddings import get_model
 from knowledge.models import KnowledgeObject, Chunk
 
-_model = None
-
-def _get_model() -> SentenceTransformer:
-    global _model
-    if _model is None:
-        _model = SentenceTransformer("all-MiniLM-L6-v2")
-    return _model
 
 @shared_task
 def process_ingest(job_id: str):
@@ -20,7 +13,7 @@ def process_ingest(job_id: str):
         return
 
     splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
-    model = _get_model()
+    model = get_model()
 
     chunks_to_create = []
     ordinal = 1

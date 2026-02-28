@@ -19,7 +19,7 @@ Systém na ingestovanie a vektorové ukladanie dokumentov. Dokumenty sa rozdeľu
 | Generovanie embeddingov (MiniLM-L6-v2) | ✅ hotovo |
 | Ukladanie chunkov do pgvector | ✅ hotovo |
 | CI (GitHub Actions) | ✅ hotovo |
-| Sémantické vyhľadávanie | 🔲 plánované |
+| Sémantické vyhľadávanie | ✅ hotovo |
 | Query API / výsledkové UI | 🔲 plánované |
 | Podpora PDF / DOCX | 🔲 plánované |
 | Autentifikácia | 🔲 plánované |
