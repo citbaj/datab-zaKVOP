@@ -20,7 +20,7 @@ Systém na ingestovanie a vektorové ukladanie dokumentov. Dokumenty sa rozdeľu
 | Ukladanie chunkov do pgvector | ✅ hotovo |
 | CI (GitHub Actions) | ✅ hotovo |
 | Sémantické vyhľadávanie | ✅ hotovo |
-| Query API / výsledkové UI | 🔲 plánované |
+| Query UI (`/search/`) | ✅ hotovo |
 | Podpora PDF / DOCX | 🔲 plánované |
 | Autentifikácia | 🔲 plánované |
 
