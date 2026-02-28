@@ -1,8 +1,10 @@
 import io
 import pypdf
+import docx as python_docx
 from unittest.mock import patch, MagicMock
 from django.test import TestCase, Client
 from django.urls import reverse
+from django.core.files.uploadedfile import SimpleUploadedFile
 from knowledge.models import KnowledgeObject, RawFile, Chunk
 from ingest.tasks import process_ingest
 from ingest.parsers import extract_text
@@ -151,3 +153,49 @@ class PdfParserTest(TestCase):
         self.assertEqual(ko.raw_files.count(), 1)
         rf = ko.raw_files.first()
         self.assertEqual(rf.filename, "file")  # Django TestClient pošle meno "file"
+
+
+def _make_docx(text: str) -> bytes:
+    """Vytvorí minimálny DOCX súbor s daným textom."""
+    doc = python_docx.Document()
+    doc.add_paragraph(text)
+    buf = io.BytesIO()
+    doc.save(buf)
+    return buf.getvalue()
+
+
+class DocxParserTest(TestCase):
+
+    def test_extract_text_detects_docx_by_content_type(self):
+        """extract_text rozpozná DOCX podľa content_type."""
+        docx_bytes = _make_docx("obsah word dokumentu")
+        result = extract_text(
+            docx_bytes,
+            "doc.docx",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        )
+        self.assertIn("obsah word dokumentu", result)
+
+    def test_extract_text_detects_docx_by_extension(self):
+        """extract_text rozpozná DOCX podľa prípony aj bez správneho content_type."""
+        docx_bytes = _make_docx("word obsah podľa prípony")
+        result = extract_text(docx_bytes, "doc.docx", "application/octet-stream")
+        self.assertIn("word obsah podľa prípony", result)
+
+    def test_wizard_submit_docx_upload(self):
+        """POST s DOCX súborom extrahuje text a vytvorí RawFile."""
+        docx_bytes = _make_docx("testovací DOCX obsah")
+        uploaded = SimpleUploadedFile(
+            "dokument.docx",
+            docx_bytes,
+            content_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        )
+        response = self.client.post("/wizard/submit/", {
+            "ko_type": "podnet",
+            "title": "DOCX test",
+            "file": uploaded,
+        })
+        ko = KnowledgeObject.objects.get(title="DOCX test")
+        self.assertEqual(ko.raw_files.count(), 1)
+        rf = ko.raw_files.first()
+        self.assertIn("testovací DOCX obsah", rf.text)

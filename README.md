@@ -22,7 +22,7 @@ Systém na ingestovanie a vektorové ukladanie dokumentov. Dokumenty sa rozdeľu
 | Sémantické vyhľadávanie | ✅ hotovo |
 | Query UI (`/search/`) | ✅ hotovo |
 | Podpora PDF | ✅ hotovo |
-| Podpora DOCX | 🔲 plánované |
+| Podpora DOCX | ✅ hotovo |
 | Autentifikácia | 🔲 plánované |
 
 ## Architektúra
