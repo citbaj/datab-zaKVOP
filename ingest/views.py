@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from knowledge.models import KnowledgeObject, RawFile
@@ -5,10 +6,12 @@ from .parsers import extract_text
 from .tasks import process_ingest
 
 
+@login_required
 def wizard(request: HttpRequest):
     return render(request, "ingest/wizard.html", {})
 
 
+@login_required
 def wizard_submit(request: HttpRequest):
     ko_type = request.POST.get("ko_type", "podnet")
     ko = KnowledgeObject.objects.create(ko_type=ko_type, title=request.POST.get("title", ""))

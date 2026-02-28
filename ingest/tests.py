@@ -2,6 +2,7 @@ import io
 import pypdf
 import docx as python_docx
 from unittest.mock import patch, MagicMock
+from django.contrib.auth.models import User
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -16,6 +17,10 @@ SAMPLE_TEXT = (
 
 
 class WizardViewTest(TestCase):
+
+    def setUp(self):
+        user = User.objects.create_user(username="tester", password="pass")
+        self.client.login(username="tester", password="pass")
 
     def test_wizard_get(self):
         """Wizard stránka sa načíta."""
@@ -123,6 +128,10 @@ def _make_pdf(text: str) -> bytes:
 
 class PdfParserTest(TestCase):
 
+    def setUp(self):
+        user = User.objects.create_user(username="tester", password="pass")
+        self.client.login(username="tester", password="pass")
+
     def test_extract_text_plain(self):
         """extract_text dekóduje plain text súbor."""
         data = "Ahoj svet".encode("utf-8")
@@ -165,6 +174,10 @@ def _make_docx(text: str) -> bytes:
 
 
 class DocxParserTest(TestCase):
+
+    def setUp(self):
+        user = User.objects.create_user(username="tester", password="pass")
+        self.client.login(username="tester", password="pass")
 
     def test_extract_text_detects_docx_by_content_type(self):
         """extract_text rozpozná DOCX podľa content_type."""

@@ -23,7 +23,7 @@ Systém na ingestovanie a vektorové ukladanie dokumentov. Dokumenty sa rozdeľu
 | Query UI (`/search/`) | ✅ hotovo |
 | Podpora PDF | ✅ hotovo |
 | Podpora DOCX | ✅ hotovo |
-| Autentifikácia | 🔲 plánované |
+| Autentifikácia | ✅ hotovo |
 
 ## Architektúra
 
@@ -97,6 +97,12 @@ python manage.py runserver
 ```
 
 Aplikácia je dostupná na `http://localhost:8000/wizard/`.
+
+### 7. Vytvorenie používateľa
+
+```bash
+python manage.py createsuperuser
+```
 
 ## Premenné prostredia
 

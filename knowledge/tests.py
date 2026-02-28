@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.test import TestCase
 from knowledge.models import KnowledgeObject, RawFile, Chunk
 from knowledge.embeddings import encode
@@ -9,6 +10,10 @@ CATS_TEXT = "Mačka je nezávislé zviera. Mačky radi spia a loví myši. " * 2
 
 
 class SearchViewTest(TestCase):
+
+    def setUp(self):
+        user = User.objects.create_user(username="tester", password="pass")
+        self.client.login(username="tester", password="pass")
 
     def test_search_get_empty(self):
         """GET /search/ bez dotazu vráti 200 a prázdne výsledky."""

@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import HttpRequest
 from pgvector.django import CosineDistance
@@ -7,6 +8,7 @@ from .embeddings import encode
 TOP_K = 10
 
 
+@login_required
 def search(request: HttpRequest):
     query = request.GET.get("q", "").strip()
     results = []

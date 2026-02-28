@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
   <body hx-boost="true">
+    <p style="text-align:right">{{ request.user.username }} | <a href="/logout/">Odhlásiť sa</a></p>
     <h1>Sémantické vyhľadávanie</h1>
 
     <form method="get" action="/search/">

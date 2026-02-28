@@ -142,6 +142,13 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # -------------------------------------------------------------------
+# AUTHENTICATION
+# -------------------------------------------------------------------
+LOGIN_URL = "/login/"
+LOGIN_REDIRECT_URL = "/wizard/"
+LOGOUT_REDIRECT_URL = "/login/"
+
+# -------------------------------------------------------------------
 # CELERY / REDIS
 # -------------------------------------------------------------------
 CELERY_BROKER_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")

@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
   <body hx-boost="true">
+    <p style="text-align:right">{{ request.user.username }} | <a href="/logout/">Odhlásiť sa</a></p>
     <h1>Ingest Wizard</h1>
     <form method="post" action="/wizard/submit/" enctype="multipart/form-data">
       {% csrf_token %}
