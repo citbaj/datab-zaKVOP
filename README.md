@@ -1,6 +1,10 @@
 # PDRFlow
 
-[![CI](https://github.com/citbaj/datab-zaKVOP/actions/workflows/ci.yml/badge.svg)](https://github.com/citbaj/datab-zaKVOP/actions/workflows/ci.yml)
+| | |
+|---|---|
+| CI | [![CI](https://github.com/citbaj/datab-zaKVOP/actions/workflows/ci.yml/badge.svg)](https://github.com/citbaj/datab-zaKVOP/actions/workflows/ci.yml) |
+| Python | ![Python](https://img.shields.io/badge/python-3.12-blue) |
+| Django | ![Django](https://img.shields.io/badge/django-5.1-green) |
 
 Systém na ingestovanie a vektorové ukladanie dokumentov. Dokumenty sa rozdeľujú na chunky, každý chunk dostane embedding (384-dimenzionálny vektor) a uloží sa do PostgreSQL s rozšírením pgvector pre neskoršie sémantické vyhľadávanie.
 
