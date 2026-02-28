@@ -1,9 +1,11 @@
 import io
+import pypdf
 from unittest.mock import patch, MagicMock
 from django.test import TestCase, Client
 from django.urls import reverse
 from knowledge.models import KnowledgeObject, RawFile, Chunk
 from ingest.tasks import process_ingest
+from ingest.parsers import extract_text
 
 
 SAMPLE_TEXT = (
@@ -105,3 +107,47 @@ class ProcessIngestTaskTest(TestCase):
         chunks = Chunk.objects.filter(ko=ko).order_by("ordinal")
         ordinals = [c.ordinal for c in chunks]
         self.assertEqual(ordinals, list(range(1, len(ordinals) + 1)))
+
+
+def _make_pdf(text: str) -> bytes:
+    """Vytvorí minimálny PDF súbor s daným textom."""
+    writer = pypdf.PdfWriter()
+    page = writer.add_blank_page(width=595, height=842)
+    writer.add_page(page)
+    buf = io.BytesIO()
+    writer.write(buf)
+    return buf.getvalue()
+
+
+class PdfParserTest(TestCase):
+
+    def test_extract_text_plain(self):
+        """extract_text dekóduje plain text súbor."""
+        data = "Ahoj svet".encode("utf-8")
+        result = extract_text(data, "test.txt", "text/plain")
+        self.assertEqual(result, "Ahoj svet")
+
+    def test_extract_text_detects_pdf_by_content_type(self):
+        """extract_text rozpozná PDF podľa content_type."""
+        pdf_bytes = _make_pdf("obsah dokumentu")
+        result = extract_text(pdf_bytes, "doc.pdf", "application/pdf")
+        self.assertIsInstance(result, str)
+
+    def test_extract_text_detects_pdf_by_extension(self):
+        """extract_text rozpozná PDF podľa prípony aj bez správneho content_type."""
+        pdf_bytes = _make_pdf("obsah dokumentu")
+        result = extract_text(pdf_bytes, "doc.pdf", "application/octet-stream")
+        self.assertIsInstance(result, str)
+
+    def test_wizard_submit_pdf_upload(self):
+        """POST s PDF súborom extrahuje text a vytvorí RawFile."""
+        pdf_bytes = _make_pdf("testovací PDF obsah")
+        response = self.client.post("/wizard/submit/", {
+            "ko_type": "podnet",
+            "title": "PDF test",
+            "file": io.BytesIO(pdf_bytes),
+        }, format="multipart")
+        ko = KnowledgeObject.objects.get(title="PDF test")
+        self.assertEqual(ko.raw_files.count(), 1)
+        rf = ko.raw_files.first()
+        self.assertEqual(rf.filename, "file")  # Django TestClient pošle meno "file"

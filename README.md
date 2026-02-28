@@ -21,7 +21,8 @@ Systém na ingestovanie a vektorové ukladanie dokumentov. Dokumenty sa rozdeľu
 | CI (GitHub Actions) | ✅ hotovo |
 | Sémantické vyhľadávanie | ✅ hotovo |
 | Query UI (`/search/`) | ✅ hotovo |
-| Podpora PDF / DOCX | 🔲 plánované |
+| Podpora PDF | ✅ hotovo |
+| Podpora DOCX | 🔲 plánované |
 | Autentifikácia | 🔲 plánované |
 
 ## Architektúra
